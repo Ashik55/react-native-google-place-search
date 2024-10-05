@@ -1,6 +1,6 @@
 {
   "name": "react-native-google-place-search",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "Google place search sdk for react native & expo projects",
   "main": "index.js",
   "scripts": {
@@ -27,7 +27,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/yourusername/react-native-google-place-search.git"
+    "url": "https://github.com/Ashik55/react-native-google-place-search.git"
   },
   "bugs": {
     "url": "https://github.com/Ashik55/react-native-google-place-search/issues"
