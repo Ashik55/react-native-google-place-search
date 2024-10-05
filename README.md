@@ -4,7 +4,7 @@
 
 ## Preview
 
-![](https://github.com/Ashik55/react-native-google-place-search/master/Assets/preview.gif)
+![](./Assets/preview.gif)
 
 ## Features
 
