@@ -7,6 +7,7 @@ import {
   TouchableOpacity,
   StyleSheet,
   ActivityIndicator,
+  Image,
 } from "react-native";
 import axios from "axios";
 import debounce from "lodash.debounce";
@@ -15,10 +16,15 @@ const GooglePlaceSearch = (props) => {
   const {
     onPlaceSelected,
     placeholder = "Search for a place",
+    shouldShowPoweredLogo = true,
     containerStyle,
     inputStyle,
     placeItemStyle,
     placeTextStyle,
+    listFooterComponent,
+    listFooterStyle,
+    listHeaderComponent,
+    listHeaderStyle,
     apiKey,
     minimumQueryLength = 3,
   } = props;
@@ -103,6 +109,28 @@ const GooglePlaceSearch = (props) => {
     }
   };
 
+  const handleTextChange = (text) => {
+    setQuery(text);
+    debouncedFetchPlaces(text);
+    if (!text) setPlaces([]);
+  };
+
+  const _renderPoweredLogo = () => {
+    if (!shouldShowPoweredLogo || places.length == 0) {
+      return null;
+    }
+
+    return (
+      <View style={[styles.poweredByContainer]}>
+        <Image
+          style={[styles.poweredByLogoStyle]}
+          resizeMode="contain"
+          source={require("./Assets/powered_by_google_on_white.png")}
+        />
+      </View>
+    );
+  };
+
   return (
     <View style={[styles.container, containerStyle]}>
       <TextInput
@@ -110,16 +138,18 @@ const GooglePlaceSearch = (props) => {
         style={[styles.input, inputStyle]}
         placeholder={placeholder}
         value={query}
-        onChangeText={(text) => {
-          setQuery(text);
-          debouncedFetchPlaces(text);
-        }}
+        clearButtonMode="while-editing"
+        onChangeText={handleTextChange}
       />
       {loading && <ActivityIndicator />}
       {error && <Text style={styles.errorText}>{error}</Text>}
       <FlatList
         data={places}
         keyExtractor={(item) => item.place_id}
+        ListHeaderComponent={listHeaderComponent}
+        ListHeaderComponentStyle={listHeaderStyle}
+        ListFooterComponentStyle={listFooterStyle}
+        ListFooterComponent={listFooterComponent ?? _renderPoweredLogo}
         renderItem={({ item }) => (
           <TouchableOpacity
             onPress={() => handleSelectPlace(item)}
@@ -161,6 +191,17 @@ const styles = StyleSheet.create({
   },
   placeText: {
     fontSize: 16,
+  },
+  poweredByLogoStyle: {
+    height: 20,
+    width: 120,
+  },
+  poweredByContainer: {
+    flex: 1, // Take the full space
+    flexDirection: "row", // Horizontal layout if needed
+    justifyContent: "flex-end", // Align items to the bottom-right
+    alignItems: "flex-end", // Align items to the bottom-right
+    marginTop: 4,
   },
 });
 

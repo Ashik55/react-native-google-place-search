@@ -2,7 +2,7 @@
   "name": "react-native-google-place-search",
   "version": "1.0.1",
   "description": "Google place search sdk for react native & expo projects",
-  "main": "src/index.js",
+  "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
